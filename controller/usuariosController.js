@@ -10,5 +10,18 @@ exports.cadastrar = ({ nome, email, senha, confirma }) => {
   return usuariosModel.novoUsuario({ nome, email, hashed });
 };
 
+exports.login = ({ email, senha }) => {
+  const usuario = usuariosModel.getUserByEmail(email);
+
+  if (usuario === undefined) {
+    throw new Error("Usuário não encontrado. Crie uma nova conta");
+  }
+
+  if (!bcryptjs.compareSync(senha, usuario.hashed)) {
+    throw new Error("Senha incorreta");
+  }
+
+  return usuario;
+};
 
 exports.listarTodos = () => usuariosModel.listarTodos();

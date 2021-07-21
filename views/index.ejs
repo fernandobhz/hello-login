@@ -16,6 +16,15 @@
 
     <pre><%=JSON.stringify(locals, null, 2)%></pre>
 
-    <a href="/logout">Sair</a>
+    <% if (estouLogadoCorretamente) { %> 
+      <a href="/logout">Sair</a><br />
+    <% } else { %> 
+      <form action="/login" method="POST">
+        Login<br />
+        Email: <input type="text" name="email" /><br />
+        Senha: <input type="password" name="senha" /><br />
+        <input type="submit" value="Log in" />
+      </form>
+    <% } %> 
   </body>
 </html>

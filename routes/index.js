@@ -16,13 +16,22 @@ router.post("/", function (req, res, next) {
     nome,
     email,
     senha,
-    confirma,
+    confirma, 
   });
 
   const { session } = req;
   session.userId = userId;
 
   res.redirect('/');
+});
+
+router.post("/login", function (req, res, next) {
+  const { email, senha } = req.body;
+
+  const { id: userId } = usuariosController.login({
+    email,
+    senha
+  })
 });
 
 router.use("/logout", function (req, res, next) {

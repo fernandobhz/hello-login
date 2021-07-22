@@ -11,4 +11,18 @@ exports.cadastrar = ({ nome, email, senha, confirma }) => {
 };
 
 
-exports.listarTodos = () => usuariosModel.listarTodos();
+exports.login = ({email, senha})=> {
+  const emailUsuario = usuariosModel.procurarEmail(email);
+
+  if (emailUsuario === undefined){
+    throw new Error("Este email não está cadastrado no sistema")
+  } 
+
+  if (!bcryptjs.compareSync(senha, usuarios.hashed)){
+    throw new Error("A senha está incorreta")
+  }
+
+  return emailUsuario;
+}
+
+exports.listarTodos = () => usuariosModel.listarTodos(); 

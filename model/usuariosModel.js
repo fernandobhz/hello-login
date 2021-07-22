@@ -1,4 +1,5 @@
 const usuarios = [];
+
 exports.novoUsuario = ({ nome, email, hashed }) => {
   const id = usuarios.length + 1;
 
@@ -14,5 +15,6 @@ exports.novoUsuario = ({ nome, email, hashed }) => {
   return usuario;
 };
 
-
 exports.listarTodos = () => usuarios;
+
+exports.procurarEmail = (email) => usuarios.find(usuario => usuario.email === email);

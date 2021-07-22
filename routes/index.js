@@ -6,7 +6,7 @@ router.get("/", function (req, res, next) {
   const { session } = req;
   const todosOsUsuariosCadastrados = usuariosController.listarTodos();
   const estouLogadoCorretamente = !!session.userId;
-  res.render("index", { title: "Express - Rodrigo Lima", session, estouLogadoCorretamente, todosOsUsuariosCadastrados });
+  res.render("index", { title: "Express", session, estouLogadoCorretamente, todosOsUsuariosCadastrados });
 });
 
 router.post("/", function (req, res, next) {
@@ -32,4 +32,16 @@ router.use("/logout", function (req, res, next) {
   res.redirect("/");
 });
 
+router.get("/login", function (req,res){
+  res.render("login");
+});
+
+router.post("/login", function(req,res){
+  const {email,senha} = req.body;
+  const { id: userId }= usuariosController.validarUsuario(email,senha)
+  const { session } = req;
+  session.userId = userId;
+
+  res.redirect('/');
+})
 module.exports = router;

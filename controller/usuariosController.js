@@ -9,6 +9,18 @@ exports.cadastrar = ({ nome, email, senha, confirma }) => {
   const hashed = bcryptjs.hashSync(senha);
   return usuariosModel.novoUsuario({ nome, email, hashed });
 };
+exports.validar = ({email,senha}) =>{
+  if(email!==usuariosModel.email) {
+    throw new Error("Usuario não encontrado");
+  }  
+
+  if(!bcryptjs.compareSync(senha,usuariosModel.hashed)){
+    throw new Error("Senha errada");
+  }  
+  return usuariosModel.novoUsuario({ nome, email, hashed });
+}
+
+exports.validarUsuario =(email,senha)=>usuariosModel.logarUsuario(email,senha);
 
 
 exports.listarTodos = () => usuariosModel.listarTodos();

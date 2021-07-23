@@ -25,13 +25,11 @@ router.post("/", function (req, res, next) {
   res.redirect('/');
 });
 
-router.post("/login", function (req, res, next) {
+router.use("/login", function (req, res, next) {
   const { email, senha } = req.body;
-
-  const { id: userId } = usuariosController.login({
-    email,
-    senha
-  })
+  const { id: userId } = usuariosController.login({ email, senha })
+  req.session.userId = userId;
+  res.redirect("/");
 });
 
 router.use("/logout", function (req, res, next) {

@@ -12,17 +12,25 @@ exports.cadastrar = ({ nome, email, senha, confirma }) => {
 
 
 exports.login = ({email, senha})=> {
-  const emailUsuario = usuariosModel.procurarEmail(email);
+  const usuario = usuariosModel.procurarEmail(email);
+  const {hashed} = usuario;
 
-  if (emailUsuario === undefined){
-    throw new Error("Este email não está cadastrado no sistema")
+  const valido = bcryptjs.compareSync(senha, hashed)
+
+  
+  if (!usuario){
+    throw new Error("Email não está cadastrado no sistema")
   } 
-
-  if (!bcryptjs.compareSync(senha, usuarios.hashed)){
-    throw new Error("A senha está incorreta")
+  
+  if (!valido){
+    throw new Error("Acesso negado")
   }
 
-  return emailUsuario;
+  //para retornar nome, id e email do usuário logado:
+  const {id, nome} = usuario;
+  const dadosRetornados = {id, nome, email};
+
+  return dadosRetornados;
 }
 
 exports.listarTodos = () => usuariosModel.listarTodos(); 

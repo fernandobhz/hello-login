@@ -14,5 +14,6 @@ exports.novoUsuario = ({ nome, email, hashed }) => {
   return usuario;
 };
 
-
 exports.listarTodos = () => usuarios;
+
+exports.buscarPorEmail = ({ email }) => usuarios.find(usuario => usuario.email === email);

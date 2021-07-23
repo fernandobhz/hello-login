@@ -17,6 +17,10 @@ exports.listarTodos = () => usuariosModel.listarTodos();
 
 exports.efetuarLogin = ({email, senha}) => {
   const usuario = usuariosModel.buscarPorEmail(email);
+
+  if (!usuario){
+    throw new Error('Access denied');
+  }
   const { hashed } = usuario;
   const isValid = bcryptjs.compareSync(senha, hashed);
 

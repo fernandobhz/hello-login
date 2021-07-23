@@ -1,21 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
-    <form method="POST" >
-      Dados do usuário<br />
-      Nome: <input type="text" name="nome" /><br />
-      Email: <input type="text" name="email" /><br />
-      Senha: <input type="password" name="senha" /><br />
-      Confirma: <input type="password" name="confirma" /><br />
-      <input type="submit" value="Enviar" />
+
+    <form method="POST">
+      <h1>Dados do usuário</h1><br />
+      Nome: <br /><input type="text" name="nome" /><br />
+      Email: <br /><input type="text" name="email" /><br />
+      Senha: <br /><input type="password" name="senha" /><br />
+      Confirma: <br /><input type="password" name="confirma" /><br />
+      <br /><input type="submit" value="Cadastrar" />
     </form>
+
+    <br />
+    <a href="/login"><button type="button">Seguir para login</button></a>
+    <br />
 
     <pre><%=JSON.stringify(locals, null, 2)%></pre>
 
     <a href="/logout">Sair</a>
+    
   </body>
 </html>

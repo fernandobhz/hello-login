@@ -12,3 +12,25 @@ exports.cadastrar = ({ nome, email, senha, confirma }) => {
 
 
 exports.listarTodos = () => usuariosModel.listarTodos();
+
+exports.efetuarLogin = ({ senha, email }) => {
+  const usuario = usuariosModel.buscarPorEmail({ email });
+
+  if(!usuario) {
+    throw new Error ('Access denied');
+  };
+
+  const { hashed } = usuario;
+  
+  const isValid = bcryptjs.compareSync(senha, hashed);
+
+  if(!isValid) {
+    throw new Error ('Access denied');
+  }
+
+  const { id, nome } = usuario;
+
+  const ret = { id, nome, email };
+
+  return ret;
+};

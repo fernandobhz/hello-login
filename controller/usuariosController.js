@@ -1,6 +1,8 @@
 const usuariosModel = require('../model/usuariosModel');
 const bcryptjs = require('bcryptjs');
 
+
+
 exports.cadastrar = ({ nome, email, senha, confirma }) => {
   if ( senha !== confirma ) {
     throw new Error("As senhas não conferem");
@@ -12,3 +14,24 @@ exports.cadastrar = ({ nome, email, senha, confirma }) => {
 
 
 exports.listarTodos = () => usuariosModel.listarTodos();
+
+exports.efetuarLogin = ({email, senha}) => {
+  const usuario = usuariosModel.buscarPorEmail(email);
+
+  if (!usuario){
+    throw new Error('Access denied');
+  }
+  const { hashed } = usuario;
+  const isValid = bcryptjs.compareSync(senha, hashed);
+
+  if (!isValid){
+    throw new Error('Access denied')
+  }
+
+  const { id, nome }= usuario;
+
+  const ret = { id, nome, email };
+  
+  return ret;
+};
+

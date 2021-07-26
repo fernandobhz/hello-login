@@ -14,5 +14,11 @@ exports.novoUsuario = ({ nome, email, hashed }) => {
   return usuario;
 };
 
+exports.procurarEmail = (email) => {
+  const emailEncontrado = usuarios.find((usuario) => email === usuario.email);
+  console.log(emailEncontrado);
+  return emailEncontrado;
+};
 
+console.log(usuarios);
 exports.listarTodos = () => usuarios;

@@ -13,15 +13,17 @@ exports.cadastrar = ({ nome, email, senha, confirma }) => {
 exports.login = ({ email, senha }) => {
   const usuario = usuariosModel.getUserByEmail(email);
 
-  if (usuario === undefined) {
-    throw new Error("Usuário não encontrado. Crie uma nova conta");
+  if (!usuario) {
+    throw new Error("Acesso negado: Usuário ou senha inválido");
   }
 
   if (!bcryptjs.compareSync(senha, usuario.hashed)) {
-    throw new Error("Senha incorreta");
+    throw new Error("Acesso negado: Usuário ou senha inválido");
   }
 
-  return usuario;
+  const { id, nome } = usuario;
+
+  return { id, nome, email };
 };
 
 exports.listarTodos = () => usuariosModel.listarTodos();

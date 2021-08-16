@@ -1,4 +1,4 @@
-const usuariosModel = require('../model/usuariosModel');
+const { Usuario } = require('../models');
 const bcryptjs = require('bcryptjs');
 
 exports.cadastrar = ({ nome, email, senha, confirma }) => {
@@ -7,8 +7,12 @@ exports.cadastrar = ({ nome, email, senha, confirma }) => {
   }  
 
   const hashed = bcryptjs.hashSync(senha);
+
   return usuariosModel.novoUsuario({ nome, email, hashed });
 };
 
+exports.listarTodos = async () => {
+    const todosUsuarios = await Usuario.findAll();
 
-exports.listarTodos = () => usuariosModel.listarTodos();
+    return todosUsuarios;
+}

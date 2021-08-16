@@ -3,9 +3,9 @@ const router = express.Router();
 const usuariosController = require("../controller/usuariosController");
 const loginController = require("../controller/loginController");
 
-router.get("/", function (req, res, next) {
+router.get("/", async function (req, res, next) {
   const { session } = req;
-  const todosOsUsuariosCadastrados = usuariosController.listarTodos();
+  const todosOsUsuariosCadastrados = await usuariosController.listarTodos();
 
   const estouLogadoCorretamente = !!session.userId;
   res.render("index", { title: "Express", session, estouLogadoCorretamente, todosOsUsuariosCadastrados });
@@ -39,11 +39,11 @@ router.use("/logout", function (req, res, next) {
   res.redirect("/");
 });
 
-router.post("/login", function(req, res, next){
-  const todosOsUsuariosCadastrados = usuariosController.listarTodos();
-    console.log(todosOsUsuariosCadastrados);
+router.post("/login", async function(req, res, next){
+  const todosOsUsuariosCadastrados = await usuariosController.listarTodos();
+
   const { email, senha } = req.body;
-  loginController.efetuarLogin({email,senha});
+  await loginController.efetuarLogin({email,senha});
 
   res.redirect("/");
 });

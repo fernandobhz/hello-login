@@ -1,20 +1,24 @@
-const usuariosModel = require('../model/usuariosModel');
+const { Usuario } = require('../models');
 const bcrypt = require('bcryptjs');
 
 
 
-exports.efetuarLogin = ({email, senha}) => {
-    const usuarioValido = usuariosModel.procurarEmail(email);
+exports.efetuarLogin = async ({email, senha}) => {
+    const usuarioValido = await Usuario.findOne({
+        where: {
+            email
+        }
+    });
 
     if (!usuarioValido) {
-        return res.status(404).send("Email ou senha inválido!")
+        throw new Error("Email ou senha inválido!")
     }
 
-    const compararSenha = bcrypt.compareSync(senha, hashed);
+    const compararSenha = bcrypt.compareSync(senha, usuarioValido.senha);
 
     if (!compararSenha) {
-        return res.status(401).send("Email ou senha inválido!")
+        throw new Error("Email ou senha inválido!")
     }
 
-    return 
+    return usuarioValido.dataValues;
 };

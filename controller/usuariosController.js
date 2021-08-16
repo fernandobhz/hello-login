@@ -15,4 +15,4 @@ exports.listarTodos = async () => {
     const todosUsuarios = await Usuario.findAll();
 
     return todosUsuarios;
-}
+};
